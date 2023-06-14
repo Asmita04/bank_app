@@ -1,5 +1,4 @@
 package com.bluesky.bankapp;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,6 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
- int sequenceNumber;
 
     public Map<String, User> userMap;
     public HashMap<String, Integer> accountNumbers ;
@@ -20,8 +18,9 @@ public class BankApplication {
         userMap=new HashMap<>();
         accountNumbers = new HashMap<>();
     }
-    public void addUserAccount(@NotNull User user) {
+    public void addUserAccount(User user) {
         String adhaarNo = user.getAdhaarNo();
+        int sequenceNumber;
         if (!accountNumbers.containsKey(adhaarNo)) {
             accountNumbers.put(adhaarNo, 1);
         } else {
@@ -41,12 +40,6 @@ public class BankApplication {
     public static void main(String[] args) {
 
         int choice;
-        String userName;
-        String birthDate;
-        long mobileNo = 0;
-        String adhaarNo;
-        String accountNo;
-        int balance = 0;
 
         Scanner scan = new Scanner(System.in);
 
@@ -66,6 +59,12 @@ public class BankApplication {
             switch (choice) {
                 case 1: {
 
+                    String userName;
+                    String birthDate;
+                    long mobileNo;
+                    String adhaarNo;
+                    int balance;
+
                     System.out.println("Mock User registration!");
                     System.out.println("Enter name:");
                     scan.nextLine();
@@ -81,7 +80,7 @@ public class BankApplication {
 
                     System.out.println("Enter Adhaar No:");
                     scan.nextLine();
-                    adhaarNo = new String(scan.nextLine());
+                    adhaarNo = scan.nextLine();
 
                     System.out.println("Enter Balance:");
                     balance = scan.nextInt();
@@ -98,7 +97,7 @@ public class BankApplication {
                     System.out.println("Removing Account for the particular user!");
                     System.out.println("Enter Account number to remove from list");
                     scan.nextLine();
-                    accountNo = new String(scan.nextLine());
+                    String accountNo = scan.nextLine();
 
                     if (account.userMap.containsKey(accountNo)) {
                         account.userMap.remove(accountNo);
@@ -146,7 +145,7 @@ public class BankApplication {
                     System.out.println("Display record");
                     System.out.println("Enter Account number:");
                     scan.nextLine();
-                    accountNo = scan.nextLine();
+                    String accountNo = scan.nextLine();
                     User userdetails= account.getUserDetails(accountNo);
 
                     if(userdetails!=null){
