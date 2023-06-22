@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class StoreData {
+public class BankAppDataStorage {
     int sequenceNumber;
 
     public Map<String, User> userMap;
