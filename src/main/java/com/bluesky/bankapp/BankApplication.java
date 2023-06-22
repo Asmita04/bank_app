@@ -11,47 +11,21 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
- int sequenceNumber;
-
-    public Map<String, User> userMap;
-    public HashMap<String, Integer> accountNumbers ;
-
-    public BankApplication() {
-        userMap=new HashMap<>();
-        accountNumbers = new HashMap<>();
-    }
-    public void addUserAccount(@NotNull User user) {
-        String adhaarNo = user.getAdhaarNo();
-        if (!accountNumbers.containsKey(adhaarNo)) {
-            accountNumbers.put(adhaarNo, 1);
-        } else {
-            sequenceNumber = accountNumbers.get(adhaarNo) + 1;
-            accountNumbers.put(adhaarNo, sequenceNumber);
-        }
-
-        sequenceNumber = accountNumbers.get(adhaarNo);
-        String accountNo = adhaarNo + "-" + sequenceNumber;
-        user.setAccountNo(accountNo);
-        userMap.put(accountNo, user);
-    }
-    public User getUserDetails(String accountNo) {
-        return userMap.get(accountNo);
-    }
 
     public static void main(String[] args) {
 
         int choice;
         String userName;
         String birthDate;
-        long mobileNo = 0;
+        long mobileNo ;
         String adhaarNo;
         String accountNo;
-        int balance = 0;
+        int balance;
 
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Welcome to MHETRE's Bank Pvt Ltd!!");
-        BankApplication account = new BankApplication();
+        StoreData account = new StoreData();
 
 
         do {
@@ -66,7 +40,6 @@ public class BankApplication {
             switch (choice) {
                 case 1: {
 
-                    System.out.println("Mock User registration!");
                     System.out.println("Enter name:");
                     scan.nextLine();
                     userName = scan.nextLine();
@@ -95,7 +68,6 @@ public class BankApplication {
 
                 case 2: {
 
-                    System.out.println("Removing Account for the particular user!");
                     System.out.println("Enter Account number to remove from list");
                     scan.nextLine();
                     accountNo = new String(scan.nextLine());
@@ -103,20 +75,16 @@ public class BankApplication {
                     if (account.userMap.containsKey(accountNo)) {
                         account.userMap.remove(accountNo);
                         System.out.println("1 Account Deleted!");
-
-                        if (account.userMap.containsKey(accountNo)) {
-                            account.userMap.remove(accountNo);
-                            System.out.println(" Account Deleted Successfully!!");
-                        } else {
+                        }
+                    else {
                             System.out.println("Account is not present!");
                         }
-                    }
 
                     break;
                 }
 
                 case 3: {
-                    System.out.println("Money transfering from one account to other!");
+                    System.out.println("Money transferring from one account to other!");
                     System.out.println("Enter account to which you wanted to send money:");
                     String receiverAccount = scan.nextLine();
 
@@ -165,7 +133,7 @@ public class BankApplication {
                     break;
                 }
                 default:
-                    throw new IllegalStateException(" I'm happy to help you on this journey please click one of the option below to get started!" );
+                    throw new IllegalStateException(" Thank You , Have a Nice Day!" );
             }
 
 
