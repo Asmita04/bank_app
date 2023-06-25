@@ -11,6 +11,32 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
+    public HashMap<String, Integer> accountNumbers ;
+
+    public BankApplication() {
+        accountNumbers = new HashMap<>();
+        }
+    public void addUserAccount(@NotNull User user) {
+        int sequenceNumber;
+        String adhaarNo = user.getAdhaarNo();
+        if (!accountNumbers.containsKey(adhaarNo)) {
+            accountNumbers.put(adhaarNo, 1);
+        } else {
+            sequenceNumber = accountNumbers.get(adhaarNo) + 1;
+            System.out.println("Sequence no."+sequenceNumber);
+            accountNumbers.put(adhaarNo, sequenceNumber);
+        }
+
+        sequenceNumber = accountNumbers.get(adhaarNo);
+        String accountNo = adhaarNo + "-" + sequenceNumber;
+        user.setAccountNo(accountNo);
+
+        BankAppDataStorage.userMap.put(adhaarNo, user);
+
+    }
+    public User getUserDetails(String adhaarNo) {
+        return BankAppDataStorage.userMap.get(adhaarNo);
+    }
 
     public static void main(String[] args) {
 
@@ -25,8 +51,9 @@ public class BankApplication {
         Scanner scan = new Scanner(System.in);
 
         System.out.println("Welcome to MHETRE's Bank Pvt Ltd!!");
-        StoreData account = new StoreData();
+        BankApplication account = new BankApplication();
 
+        BankAppDataStorage userData = new BankAppDataStorage();
 
         do {
             System.out.println("1.Register User");
@@ -47,10 +74,8 @@ public class BankApplication {
                     System.out.println("Enter Birth Date:");
                     birthDate = scan.nextLine();
 
-
                     System.out.println("Enter Mobile:");
                     mobileNo = scan.nextLong();
-
 
                     System.out.println("Enter Adhaar No:");
                     scan.nextLine();
@@ -58,7 +83,6 @@ public class BankApplication {
 
                     System.out.println("Enter Balance:");
                     balance = scan.nextInt();
-
 
                     User user = new User(userName, birthDate, mobileNo, adhaarNo, balance);
                     account.addUserAccount(user);
@@ -72,17 +96,15 @@ public class BankApplication {
                     scan.nextLine();
                     accountNo = new String(scan.nextLine());
 
-                    if (account.userMap.containsKey(accountNo)) {
-                        account.userMap.remove(accountNo);
+                    if (BankAppDataStorage.userMap.containsKey(accountNo)) {
+                        BankAppDataStorage.userMap.remove(accountNo);
                         System.out.println("1 Account Deleted!");
                         }
                     else {
                             System.out.println("Account is not present!");
                         }
-
                     break;
                 }
-
                 case 3: {
                     System.out.println("Money transferring from one account to other!");
                     System.out.println("Enter account to which you wanted to send money:");
@@ -94,8 +116,8 @@ public class BankApplication {
                     System.out.println("\nEnter Amount: ");
                     int dAmount = scan.nextInt();
 
-                    User sender =account. userMap.get(senderAccount);
-                    User receiver = account.userMap.get(receiverAccount);
+                    User sender =BankAppDataStorage. userMap.get(senderAccount);
+                    User receiver = BankAppDataStorage.userMap.get(receiverAccount);
 
                     if (sender.getBalance() >= dAmount) {
                         sender.setBalance(sender.getBalance() - dAmount);
@@ -104,26 +126,23 @@ public class BankApplication {
                     } else {
                         System.out.println("Insufficient Balance!");
                     }
-
-                    account.userMap.put(senderAccount, sender);
-                    account.userMap.put(receiverAccount, receiver);
-
+                    BankAppDataStorage.userMap.put(senderAccount, sender);
+                    BankAppDataStorage.userMap.put(receiverAccount, receiver);
                     break;
                 }
                 case 4: {
                     System.out.println("Display record");
-                    System.out.println("Enter Account number:");
+                    System.out.println("Enter Adhaar number:");
                     scan.nextLine();
-                    accountNo = scan.nextLine();
-                    User userdetails= account.getUserDetails(accountNo);
+                    adhaarNo = scan.nextLine();
+                    User userdetails= account.getUserDetails(adhaarNo);
 
                     if(userdetails!=null){
                         System.out.println("Account No: \t\t" + "User Name: \t\t" + "Birth Date\t\t" + "Mobile No:\t\t" + "Adhaar No\t\t" + "Balance\t\n");
-                        System.out.println(accountNo + " \t\t\t \t" + userdetails.userName + "  \t  " + userdetails.birthDate + "  \t " + userdetails.mobileNo + "  \t" + userdetails.adhaarNo + "  \t" + userdetails.balance + "  \t\n");
+                        System.out.println(userdetails.accountNo + " \t\t\t \t" + userdetails.userName + "  \t  " + userdetails.birthDate + "  \t " + userdetails.mobileNo + "  \t" + userdetails.adhaarNo + "  \t" + userdetails.balance + "  \t\n");
                     }
                     else {
                         System.out.println("User not found!");
-
                         break;
                     }
                 }
