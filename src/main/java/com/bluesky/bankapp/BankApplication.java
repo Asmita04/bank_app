@@ -15,7 +15,7 @@ public class BankApplication {
 
     public BankApplication() {
         accountNumbers = new HashMap<>();
-        }
+    }
     public void addUserAccount(@NotNull User user) {
         int sequenceNumber;
         String adhaarNo = user.getAdhaarNo();
@@ -99,10 +99,10 @@ public class BankApplication {
                     if (BankAppDataStorage.userMap.containsKey(accountNo)) {
                         BankAppDataStorage.userMap.remove(accountNo);
                         System.out.println("1 Account Deleted!");
-                        }
+                    }
                     else {
-                            System.out.println("Account is not present!");
-                        }
+                        System.out.println("Account is not present!");
+                    }
                     break;
                 }
                 case 3: {
