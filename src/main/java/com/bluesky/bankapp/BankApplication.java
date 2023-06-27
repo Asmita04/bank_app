@@ -44,7 +44,7 @@ public class BankApplication {
 
                     System.out.println("Enter Adhaar No:");
                     scan.nextLine();
-                    String adhaarNo = new String(scan.nextLine());
+                    String adhaarNo =scan.nextLine();
 
                     System.out.println("Enter Balance:");
                     int balance = scan.nextInt();

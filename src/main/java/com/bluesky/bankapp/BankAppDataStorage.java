@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BankAppDataStorage {
-     public  static Map<String, User> userMap;
+     public   Map<String, User> userMap;
      public HashMap<String, Integer> accountNumbers ;
 
     public BankAppDataStorage(){
@@ -15,7 +15,7 @@ public class BankAppDataStorage {
     }
 
     //Add user Account
-    public void addUserAccount( User user) {
+    public   void addUserAccount( User user) {
         int sequenceNumber;
         String adhaarNo = user.getAdhaarNo();
         if (!accountNumbers.containsKey(adhaarNo)) {
@@ -30,19 +30,19 @@ public class BankAppDataStorage {
         String accountNo = adhaarNo + "-" + sequenceNumber;
         user.setAccountNo(accountNo);
 
-        BankAppDataStorage.userMap.put(adhaarNo, user);
+        userMap.put(adhaarNo, user);
 
     }
 
     //User Details
     public User getUserDetails(String adhaarNo) {
-        return BankAppDataStorage.userMap.get(adhaarNo);
+        return userMap.get(adhaarNo);
     }
 
     //Removing Account
     public void removeAccount(String accountNo){
-        if (BankAppDataStorage.userMap.containsKey(accountNo)) {
-            BankAppDataStorage.userMap.remove(accountNo);
+        if (userMap.containsKey(accountNo)) {
+            userMap.remove(accountNo);
             System.out.println("1 Account Deleted!");
         }
         else {
@@ -51,8 +51,8 @@ public class BankAppDataStorage {
     }
 
     public void transferMoney(String senderAccount,String receiverAccount, int dAmount){
-        User sender =BankAppDataStorage. userMap.get(senderAccount);
-        User receiver = BankAppDataStorage.userMap.get(receiverAccount);
+        User sender =userMap.get(senderAccount);
+        User receiver =userMap.get(receiverAccount);
 
         if (sender.getBalance() >= dAmount) {
             sender.setBalance(sender.getBalance() - dAmount);
@@ -62,8 +62,8 @@ public class BankAppDataStorage {
             System.out.println("Insufficient Balance!");
         }
 
-        BankAppDataStorage.userMap.put(senderAccount, sender);
-        BankAppDataStorage.userMap.put(receiverAccount, receiver);
+        userMap.put(senderAccount, sender);
+        userMap.put(receiverAccount, receiver);
 
 
     }
