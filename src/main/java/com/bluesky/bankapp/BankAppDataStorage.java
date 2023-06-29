@@ -1,6 +1,8 @@
 package com.bluesky.bankapp;
 
 
+import com.bluesky.bankapp.model.MoneyTransferRequest;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,20 +51,20 @@ public class BankAppDataStorage {
         }
     }
 
-    public void transferMoney(String senderAccount,String receiverAccount, int dAmount){
-        User sender =userMap.get(senderAccount);
-        User receiver =userMap.get(receiverAccount);
+    public void transferMoney(MoneyTransferRequest request){
+        User sender =userMap.get(request.getSourceAcc());
+        User receiver =userMap.get(request.getTargetAcc());
 
-        if (sender.getBalance() >= dAmount) {
-            sender.setBalance(sender.getBalance() - dAmount);
-            receiver.setBalance(receiver.getBalance() + dAmount);
+        if (sender.getBalance() >= request.getAmount()) {
+            sender.setBalance(sender.getBalance() - request.getAmount());
+            receiver.setBalance(receiver.getBalance() + request.getAmount());
 
         } else {
             System.out.println("Insufficient Balance!");
         }
 
-        userMap.put(senderAccount, sender);
-        userMap.put(receiverAccount, receiver);
+        userMap.put(request.getSourceAcc(), sender);
+        userMap.put(request.getTargetAcc(), receiver);
 
 
     }
