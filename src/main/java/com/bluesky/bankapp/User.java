@@ -8,7 +8,6 @@ public class User {
         public String accountNo;
         public int balance;
 
-        public User(){}
         public User( String userName, String birthDate, long mobileNo, String adhaarNo ,int balance) {
                 this.userName = userName;
                 this.birthDate = birthDate;
@@ -39,7 +38,6 @@ public class User {
             public void setAccountNo(String accountNo) {
                 this.accountNo = accountNo;
             }
-
 
 
 }

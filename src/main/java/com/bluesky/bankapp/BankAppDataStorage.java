@@ -1,12 +1,13 @@
 package com.bluesky.bankapp;
 
+import com.bluesky.bankapp.model.MoneyTransferRequest;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BankAppDataStorage {
-     public   Map<String, User> userMap;
+ class BankAppDataStorage {
+     public Map<String, User> userMap;
      public HashMap<String, Integer> accountNumbers ;
 
     public BankAppDataStorage(){
@@ -15,7 +16,7 @@ public class BankAppDataStorage {
     }
 
     //Add user Account
-    public   void addUserAccount( User user) {
+    public  void addUserAccount(User user) {
         int sequenceNumber;
         String adhaarNo = user.getAdhaarNo();
         if (!accountNumbers.containsKey(adhaarNo)) {
@@ -31,6 +32,8 @@ public class BankAppDataStorage {
         user.setAccountNo(accountNo);
 
         userMap.put(adhaarNo, user);
+
+
 
     }
 
@@ -49,21 +52,20 @@ public class BankAppDataStorage {
             System.out.println("Account is not present!");
         }
     }
+    public void transferMoney(MoneyTransferRequest request){
+        User sender =userMap.get(request.getSourceAcc());
+        User receiver =userMap.get(request.getTargetAcc());
 
-    public void transferMoney(String senderAccount,String receiverAccount, int dAmount){
-        User sender =userMap.get(senderAccount);
-        User receiver =userMap.get(receiverAccount);
-
-        if (sender.getBalance() >= dAmount) {
-            sender.setBalance(sender.getBalance() - dAmount);
-            receiver.setBalance(receiver.getBalance() + dAmount);
+        if (sender.getBalance() >= request.getAmount()) {
+            sender.setBalance(sender.getBalance() - request.getAmount());
+            receiver.setBalance(receiver.getBalance() + request.getAmount());
 
         } else {
             System.out.println("Insufficient Balance!");
         }
 
-        userMap.put(senderAccount, sender);
-        userMap.put(receiverAccount, receiver);
+        userMap.put(request.getSourceAcc(), sender);
+        userMap.put(request.getTargetAcc(), receiver);
 
 
     }

@@ -1,8 +1,10 @@
 package com.bluesky.bankapp;
 
 
-import java.util.HashMap;
-import java.util.Map;
+import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
+import com.bluesky.bankapp.collectors.RegistrationDataCollector;
+import com.bluesky.bankapp.model.MoneyTransferRequest;
+
 import java.util.Scanner;
 
 /**
@@ -31,26 +33,9 @@ public class BankApplication {
 
             switch (choice) {
                 case 1: {
-
-                    System.out.println("Enter name:");
-                    scan.nextLine();
-                    String userName = scan.nextLine();
-
-                    System.out.println("Enter Birth Date:");
-                    String birthDate = scan.nextLine();
-
-                    System.out.println("Enter Mobile:");
-                    long mobileNo = scan.nextLong();
-
-                    System.out.println("Enter Adhaar No:");
-                    scan.nextLine();
-                    String adhaarNo =scan.nextLine();
-
-                    System.out.println("Enter Balance:");
-                    int balance = scan.nextInt();
-
-                    User user = new User(userName, birthDate, mobileNo, adhaarNo, balance);
-                    dataStorage.addUserAccount(user);
+                   RegistrationDataCollector collector=new RegistrationDataCollector(scan);
+                   User user = collector.getUserData();
+                   dataStorage.addUserAccount(user);
 
                     break;
                 }
@@ -65,16 +50,9 @@ public class BankApplication {
 
                 }
                 case 3: {
-                    System.out.println("Money transferring from one account to other!");
-                    System.out.println("Enter account to which you wanted to send money:");
-                    String receiverAccount = scan.nextLine();
-
-                    System.out.println("Enter payee account number:");
-                    String senderAccount = scan.nextLine();
-
-                    System.out.println("\nEnter Amount: ");
-                    int dAmount = scan.nextInt();
-                    dataStorage.transferMoney(senderAccount,receiverAccount,dAmount);
+                    MoneyTransferDataCollector collector= new MoneyTransferDataCollector(scan);
+                    MoneyTransferRequest transferRequest = collector.collect();
+                    dataStorage.transferMoney(transferRequest);
                     break;
                 }
                 case 4: {
@@ -93,7 +71,6 @@ public class BankApplication {
                         break;
                     }
                 }
-
                 case 5: {
                     System.out.println("Exit!");
                     break;
