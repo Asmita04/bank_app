@@ -4,7 +4,7 @@ import com.bluesky.bankapp.model.MoneyTransferRequest;
 
 import java.util.Scanner;
 
-public class MoneyTransferDataCollector {
+public class MoneyTransferDataCollector implements DataCollector {
 
     private Scanner scan;
 

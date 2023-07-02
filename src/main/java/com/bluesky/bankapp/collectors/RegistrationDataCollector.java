@@ -1,10 +1,11 @@
 package com.bluesky.bankapp.collectors;
 
-import com.bluesky.bankapp.User;
+import com.bluesky.bankapp.model.Account;
+import com.bluesky.bankapp.model.User;
 
 import java.util.Scanner;
 
-public class RegistrationDataCollector {
+public class RegistrationDataCollector implements DataCollector {
 
     private Scanner scan;
 
@@ -14,9 +15,13 @@ public class RegistrationDataCollector {
 
     public User collect() {
 
-        System.out.println("Enter name:");
+        System.out.println("Enter First Name:");
         scan.nextLine();
-        String userName = scan.nextLine();
+        String firstName = scan.nextLine();
+
+        System.out.println("Enter Last Name:");
+        scan.nextLine();
+        String lastName = scan.nextLine();
 
         System.out.println("Enter Birth Date:");
         String birthDate = scan.nextLine();
@@ -24,14 +29,24 @@ public class RegistrationDataCollector {
         System.out.println("Enter Mobile:");
         long mobileNo = scan.nextLong();
 
-        System.out.println("Enter Adhaar No:");
+        System.out.println("Enter Aadhaar No:");
         scan.nextLine();
-        String adhaarNo =scan.nextLine();
+        String aadhaarNo =scan.nextLine();
 
-        System.out.println("Enter Balance:");
-        int balance = scan.nextInt();
 
-        User user = new User(userName, birthDate, mobileNo, adhaarNo, balance);
+        User user = new User(firstName, lastName, birthDate, mobileNo, aadhaarNo);
+
+        System.out.println("Let's create your first Account - ");
+        System.out.println("Enter Opening Balance:");
+        Long balance = scan.nextLong();
+        scan.nextLine();
+
+        System.out.println("Please Enter Security PIN: ");
+        String pin = scan.nextLine();
+
+        user.setPin(pin);
+        Account account = new Account(user.getAadhaar() + "-1", user, balance);
+        user.getAccounts().add(account);
 
         return user;
     }

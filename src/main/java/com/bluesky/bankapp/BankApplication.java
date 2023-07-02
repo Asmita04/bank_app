@@ -1,42 +1,47 @@
 package com.bluesky.bankapp;
 
 
+import com.bluesky.bankapp.collectors.DataCollectorFactory;
 import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
+import com.bluesky.bankapp.executors.ActionExecutor;
+import com.bluesky.bankapp.executors.ActionExecutorBuilder;
 import com.bluesky.bankapp.model.MoneyTransferRequest;
+import com.bluesky.bankapp.model.User;
+import com.bluesky.bankapp.model.UserAction;
+import com.bluesky.bankapp.security.SessionContext;
+import com.bluesky.bankapp.ui.UserActionsMenu;
+import com.bluesky.bankapp.ui.UserScreen;
 
 import java.util.Scanner;
 
 /**
  * Simple Bank Application
- *
  **/
 
 public class BankApplication {
-     public static void main(String[] args) {
+    public static void main(String[] args) {
 
         int choice;
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Welcome to MHETRE's Bank Pvt Ltd!!");
-
+        SessionContext context = new SessionContext(scan);
         BankAppDataStorage dataStorage = new BankAppDataStorage();
+        DataCollectorFactory factory = new DataCollectorFactory(scan);
+        UserActionsMenu userActionsMenu = new UserActionsMenu(context); //todo
+        ActionExecutorBuilder executorBuilder = new ActionExecutorBuilder(context, factory, dataStorage);
 
         do {
-            System.out.println("1.Register User");
-            System.out.println("2.Remove Account");
-            System.out.println("3.Transfer Money");
-            System.out.println("4.Display Record");
-            System.out.println("5.Exit");
-            System.out.println("Enter Your Choice:");
+            userActionsMenu.displayActions();
             choice = scan.nextInt();
 
             switch (choice) {
                 case 1: {
 
-                    RegistrationDataCollector collector = new RegistrationDataCollector(scan);
-                    User user = collector.collect();
-                    dataStorage.addUserAccount(user);
+                    UserAction action = UserAction.forId(choice);
+                    ActionExecutor actionExecutor = executorBuilder.build(action);
+                    actionExecutor.execute();
+
 
                     break;
                 }
@@ -57,32 +62,26 @@ public class BankApplication {
                     break;
                 }
                 case 4: {
-                    System.out.println("Display record");
-                    System.out.println("Enter Adhaar number:");
-                    scan.nextLine();
-                    String adhaarNo = scan.nextLine();
-                    User userdetails= dataStorage.getUserDetails(adhaarNo);
-
-                    if(userdetails!=null){
-                        System.out.println("Account No: \t\t" + "User Name: \t\t" + "Birth Date\t\t" + "Mobile No:\t\t" + "Adhaar No\t\t" + "Balance\t\n");
-                        System.out.println(userdetails.accountNo + " \t\t\t \t" + userdetails.userName + "  \t  " + userdetails.birthDate + "  \t " + userdetails.mobileNo + "  \t" + userdetails.adhaarNo + "  \t" + userdetails.balance + "  \t\n");
-                    }
-                    else {
-                        System.out.println("User not found!");
-                        break;
-                    }
+                    UserAction action = UserAction.forId(choice);
+                    ActionExecutor actionExecutor = executorBuilder.build(action);
+                    actionExecutor.execute();
+                    break;
                 }
 
                 case 5: {
-                    System.out.println("Exit!");
+                    UserAction action = UserAction.forId(choice);
+                    ActionExecutor actionExecutor = executorBuilder.build(action);
+                    actionExecutor.execute();
                     break;
                 }
                 default:
-                    throw new IllegalStateException(" Thank You , Have a Nice Day!" );
+                    UserAction action = UserAction.forId(choice);
+                    ActionExecutor actionExecutor = executorBuilder.build(action);
+                    actionExecutor.execute();
             }
 
 
-        } while (choice != 5);
+        } while (choice != -1);
     }
 
 
