@@ -41,8 +41,13 @@ public class BankAppDataStorage {
     }
 
     //User Details
-    public User getUserDetails(String adhaarNo) {
-        return userMap.get(adhaarNo);
+    public User getUserDetails(String aadhaarNo) {
+        for (User user : users) {
+            if (user.getAadhaar().equals(aadhaarNo)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     //Removing Account

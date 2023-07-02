@@ -15,6 +15,8 @@ public class DataCollectorFactory {
     public DataCollector build(UserAction action) {
         if (UserAction.REGISTER.equals(action)) {
             return new RegistrationDataCollector(scan);
+        } else if (UserAction.LOGIN.equals(action)) {
+            return new LoginDataCollector(scan);
         }
         return null;
     }

@@ -48,10 +48,9 @@ public class BankApplication {
 
                 case 2: {
 
-                    System.out.println("Enter Account number to remove from list");
-                    scan.nextLine();
-                    String accountNo = scan.nextLine();
-                    dataStorage.removeAccount(accountNo);
+                    UserAction action = UserAction.forId(choice);
+                    ActionExecutor actionExecutor = executorBuilder.build(action);
+                    actionExecutor.execute();
                     break;
 
                 }
