@@ -35,4 +35,9 @@ public class LoginActionExecutor implements ActionExecutor {
         }
 
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

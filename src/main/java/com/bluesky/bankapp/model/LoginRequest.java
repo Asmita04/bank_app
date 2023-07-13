@@ -1,10 +1,10 @@
 package com.bluesky.bankapp.model;
 
-public class LoginRequest {
+public class LoginRequest implements ActionRequest {
     private String aadhaar;
-    private String pin;
+    private Integer pin;
 
-    public LoginRequest(String aadhaar, String pin) {
+    public LoginRequest(String aadhaar, Integer pin) {
         this.aadhaar = aadhaar;
         this.pin = pin;
     }
@@ -17,11 +17,11 @@ public class LoginRequest {
         this.aadhaar = aadhaar;
     }
 
-    public String getPin() {
+    public Integer getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
 }

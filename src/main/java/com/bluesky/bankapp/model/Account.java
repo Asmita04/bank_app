@@ -4,9 +4,10 @@ public class Account {
 
     private String accNum;
     private User user;
-    private Long balance;
+    private Double balance;
+    private boolean isPrimary;
 
-    public Account(String accNum, User user, Long balance) {
+    public Account(String accNum, User user, Double balance) {
         this.accNum = accNum;
         this.user = user;
         this.balance = balance;
@@ -28,11 +29,19 @@ public class Account {
         this.user = user;
     }
 
-    public Long getBalance() {
+    public Double getBalance() {
         return balance;
     }
 
-    public void setBalance(Long balance) {
+    public void setBalance(Double balance) {
         this.balance = balance;
+    }
+
+    public Boolean getPrimary() {
+        return isPrimary;
+    }
+
+    public void setPrimary(Boolean primary) {
+        isPrimary = primary;
     }
 }

@@ -18,7 +18,7 @@ public class UserActionsMenu {
         if (context.isActiveSession()) {
             banner += "|\n|          Current User: " + context.getCurr().getFullName();
         }
-        banner += "|\n";
+        banner += "\n|";
 
         System.out.println(banner);
         for (UserAction action : UserAction.values()) {

@@ -2,17 +2,15 @@ package com.bluesky.bankapp;
 
 
 import com.bluesky.bankapp.collectors.DataCollectorFactory;
-import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
-import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.executors.ActionExecutor;
-import com.bluesky.bankapp.executors.ActionExecutorBuilder;
-import com.bluesky.bankapp.model.MoneyTransferRequest;
-import com.bluesky.bankapp.model.User;
+import com.bluesky.bankapp.executors.ActionExecutorFactory;
+import com.bluesky.bankapp.io.InputReader;
+import com.bluesky.bankapp.io.StartupDataLoader;
 import com.bluesky.bankapp.model.UserAction;
 import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.ui.UserActionsMenu;
-import com.bluesky.bankapp.ui.UserScreen;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -20,66 +18,26 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         int choice;
-        Scanner scan = new Scanner(System.in);
+        InputReader scan = new InputReader(new Scanner(System.in));
+
 
         SessionContext context = new SessionContext(scan);
         BankAppDataStorage dataStorage = new BankAppDataStorage();
         DataCollectorFactory factory = new DataCollectorFactory(scan);
         UserActionsMenu userActionsMenu = new UserActionsMenu(context); //todo
-        ActionExecutorBuilder executorBuilder = new ActionExecutorBuilder(context, factory, dataStorage);
+        ActionExecutorFactory executorBuilder = new ActionExecutorFactory(context, factory, dataStorage);
 
+        StartupDataLoader dataLoader = new StartupDataLoader(dataStorage);
+        dataLoader.initDatabase();
         do {
             userActionsMenu.displayActions();
-            choice = scan.nextInt();
-
-            switch (choice) {
-                case 1: {
-
-                    UserAction action = UserAction.forId(choice);
-                    ActionExecutor actionExecutor = executorBuilder.build(action);
-                    actionExecutor.execute();
-
-
-                    break;
-                }
-
-                case 2: {
-
-                    UserAction action = UserAction.forId(choice);
-                    ActionExecutor actionExecutor = executorBuilder.build(action);
-                    actionExecutor.execute();
-                    break;
-
-                }
-                case 3: {
-                    MoneyTransferDataCollector collector = new MoneyTransferDataCollector(scan);
-                    MoneyTransferRequest transferRequest = collector.collect();
-                    dataStorage.transferMoney(transferRequest);
-                    break;
-                }
-                case 4: {
-                    UserAction action = UserAction.forId(choice);
-                    ActionExecutor actionExecutor = executorBuilder.build(action);
-                    actionExecutor.execute();
-                    break;
-                }
-
-                case 5: {
-                    UserAction action = UserAction.forId(choice);
-                    ActionExecutor actionExecutor = executorBuilder.build(action);
-                    actionExecutor.execute();
-                    break;
-                }
-                default:
-                    UserAction action = UserAction.forId(choice);
-                    ActionExecutor actionExecutor = executorBuilder.build(action);
-                    actionExecutor.execute();
-            }
-
-
+            choice = scan.readInt();
+            UserAction action = UserAction.forId(choice);
+            ActionExecutor actionExecutor = executorBuilder.build(action);
+            actionExecutor.execute();
         } while (choice != -1);
     }
 

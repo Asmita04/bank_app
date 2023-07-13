@@ -20,30 +20,11 @@ public class BankAppDataStorage {
         users = new ArrayList<>();
     }
 
-    //Add user Account
-    public   void addUserAccount( User user) {
-//        int sequenceNumber;
-//        String adhaarNo = user.getAdhaarNo();
-//        if (!accountNumbers.containsKey(adhaarNo)) {
-//            accountNumbers.put(adhaarNo, 1);
-//        } else {
-//            sequenceNumber = accountNumbers.get(adhaarNo) + 1;
-//            System.out.println("Sequence no."+sequenceNumber);
-//            accountNumbers.put(adhaarNo, sequenceNumber);
-//        }
-//
-//        sequenceNumber = accountNumbers.get(adhaarNo);
-//        String accountNo = adhaarNo + "-" + sequenceNumber;
-//        user.setAccountNo(accountNo);
-//
-//        userMap.put(adhaarNo, user);
-
-    }
 
     //User Details
     public User getUserDetails(String aadhaarNo) {
         for (User user : users) {
-            if (user.getAadhaar().equals(aadhaarNo)) {
+            if (user.getUserName().equals(aadhaarNo)) {
                 return user;
             }
         }
@@ -81,6 +62,15 @@ public class BankAppDataStorage {
 
 
     public boolean userExists(User user) {
+        return userExists(user.getUserName());
+    }
+
+    public boolean userExists(String username) {
+        for (User user : users) {
+            if (user.getUserName().equals(username)) {
+                return true;
+            }
+        }
         return false;
     }
 

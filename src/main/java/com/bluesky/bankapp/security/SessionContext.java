@@ -1,13 +1,12 @@
 package com.bluesky.bankapp.security;
 
+import com.bluesky.bankapp.io.InputReader;
 import com.bluesky.bankapp.model.User;
-
-import java.util.Scanner;
 
 public class SessionContext {
     private User curr; // represents currently logged in user
-    private Scanner scan;
-    public SessionContext(Scanner scan) {
+    private InputReader scan;
+    public SessionContext(InputReader scan) {
         this.scan = scan;
     }
 
@@ -27,11 +26,11 @@ public class SessionContext {
         curr = null;
     }
 
-    public Scanner getScan() {
+    public InputReader getScan() {
         return scan;
     }
 
-    public void setScan(Scanner scan) {
+    public void setScan(InputReader scan) {
         this.scan = scan;
     }
 }

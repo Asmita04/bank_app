@@ -3,16 +3,17 @@ package com.bluesky.bankapp.executors;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.DataCollectorFactory;
 import com.bluesky.bankapp.collectors.LoginDataCollector;
+import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.model.UserAction;
 import com.bluesky.bankapp.security.SessionContext;
 
-public class ActionExecutorBuilder {
-    private SessionContext context;
-    private DataCollectorFactory collector;
-    private BankAppDataStorage dataStorage;
+public class ActionExecutorFactory {
+    private final SessionContext context;
+    private final DataCollectorFactory collector;
+    private final BankAppDataStorage dataStorage;
 
-    public ActionExecutorBuilder(SessionContext context, DataCollectorFactory collector, BankAppDataStorage dataStorage) {
+    public ActionExecutorFactory(SessionContext context, DataCollectorFactory collector, BankAppDataStorage dataStorage) {
         this.context = context;
         this.collector = collector;
         this.dataStorage = dataStorage;
@@ -31,6 +32,9 @@ public class ActionExecutorBuilder {
         } else if (UserAction.LOGIN.equals(action)) {
             return new LoginActionExecutor(context, dataStorage,
                     (LoginDataCollector) collector.build(action));
+        } else if (UserAction.MONEY_TRANSFER.equals(action)) {
+            return new MoneyTransferActionExecutor(dataStorage,
+                    (MoneyTransferDataCollector) collector.build(action), context);
         }
         return null;
     }

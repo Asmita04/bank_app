@@ -14,4 +14,9 @@ public class LogoutActionExecutor implements ActionExecutor {
     public void execute() {
         context.invalidateSession();
     }
+
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

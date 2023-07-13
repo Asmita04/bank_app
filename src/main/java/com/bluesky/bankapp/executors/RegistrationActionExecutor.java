@@ -2,6 +2,8 @@ package com.bluesky.bankapp.executors;
 
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
+import com.bluesky.bankapp.model.Account;
+import com.bluesky.bankapp.model.RegistrationRequest;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 
@@ -18,7 +20,22 @@ public class RegistrationActionExecutor implements ActionExecutor {
     }
 
     public void execute() {
-        User user = collector.collect();
+        RegistrationRequest request = collector.collect();
+
+        User user = new User(request.getFirstName(),
+                request.getLastName(),
+                request.getBirthDate(),
+                request.getMobile(),
+                request.getUsername());
+        user.setPin(request.getPin());
+
+        Account account = new Account(user.getUserName() + "-1", user, request.getBalance());
+
+        // At the time of registration, first account is always
+        // primary account
+        account.setPrimary(true);
+
+        user.getAccounts().add(account);
         boolean exists = dataStorage.userExists(user);
         if (exists) {
             System.out.println("User already exists, please login!");
@@ -30,4 +47,8 @@ public class RegistrationActionExecutor implements ActionExecutor {
         }
     }
 
+    @Override
+    public boolean validate() {
+        return true;
+    }
 }

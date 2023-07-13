@@ -7,18 +7,18 @@ public class User {
     private String firstName;
     private String lastName;
     private String birthDate;
-    private long mobileNo;
-    private String aadhaar;
+    private String mobileNo;
+    private String userName;
     private List<Account> accounts;
 
-    private String pin;
+    private Integer pin;
 
-    public User(String firstName, String lastName, String birthDate, long mobileNo, String aadhaar) {
+    public User(String firstName, String lastName, String birthDate, String mobileNo, String userName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
         this.mobileNo = mobileNo;
-        this.aadhaar = aadhaar;
+        this.userName = userName;
         accounts = new ArrayList<>();
     }
 
@@ -46,20 +46,20 @@ public class User {
         this.birthDate = birthDate;
     }
 
-    public long getMobileNo() {
+    public String getMobileNo() {
         return mobileNo;
     }
 
-    public void setMobileNo(long mobileNo) {
+    public void setMobileNo(String mobileNo) {
         this.mobileNo = mobileNo;
     }
 
-    public String getAadhaar() {
-        return aadhaar;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setAadhaar(String aadhaar) {
-        this.aadhaar = aadhaar;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public List<Account> getAccounts() {
@@ -74,11 +74,11 @@ public class User {
         return getFirstName() + " " + getLastName();
     }
 
-    public String getPin() {
+    public Integer getPin() {
         return pin;
     }
 
-    public void setPin(String pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
 }

@@ -16,7 +16,11 @@ public class DisplayAccountsActionExecutor implements ActionExecutor {
         User user = context.getCurr();
         UserScreen.displayUserDetails(user);
         System.out.println("Press Enter to continue...");
-        context.getScan().nextLine();
-        context.getScan().nextLine();
+        context.getScan().readString();
+    }
+
+    @Override
+    public boolean validate() {
+        return true;
     }
 }

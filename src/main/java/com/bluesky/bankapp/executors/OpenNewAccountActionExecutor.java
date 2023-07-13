@@ -15,10 +15,15 @@ public class OpenNewAccountActionExecutor implements ActionExecutor {
     @Override
     public void execute() {
         System.out.println("Enter Opening balance for new account: ");
-        long balance = context.getScan().nextLong();
+        Double balance = context.getScan().readDouble();
         User user = context.getCurr();
-        Account account = new Account(user.getAadhaar() + "-" + (user.getAccounts().size() + 1)
+        Account account = new Account(user.getUserName() + "-" + (user.getAccounts().size() + 1)
                 , context.getCurr(), balance);
         user.getAccounts().add(account);
+    }
+
+    @Override
+    public boolean validate() {
+        return true;
     }
 }

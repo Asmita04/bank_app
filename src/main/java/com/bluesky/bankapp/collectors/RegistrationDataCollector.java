@@ -1,54 +1,48 @@
 package com.bluesky.bankapp.collectors;
 
-import com.bluesky.bankapp.model.Account;
-import com.bluesky.bankapp.model.User;
-
-import java.util.Scanner;
+import com.bluesky.bankapp.io.InputReader;
+import com.bluesky.bankapp.model.RegistrationRequest;
 
 public class RegistrationDataCollector implements DataCollector {
 
-    private Scanner scan;
+    private final InputReader scan;
 
-    public RegistrationDataCollector(Scanner scan) {
+    public RegistrationDataCollector(InputReader scan) {
         this.scan = scan;
     }
 
-    public User collect() {
+    @Override
+    public RegistrationRequest collect() {
 
         System.out.println("Enter First Name:");
-        scan.nextLine();
-        String firstName = scan.nextLine();
+        String firstName = scan.readString();
 
         System.out.println("Enter Last Name:");
-        scan.nextLine();
-        String lastName = scan.nextLine();
+        String lastName = scan.readString();
 
         System.out.println("Enter Birth Date:");
-        String birthDate = scan.nextLine();
+        String birthDate = scan.readString();
 
         System.out.println("Enter Mobile:");
-        long mobileNo = scan.nextLong();
+        String mobileNo = scan.readString();
 
-        System.out.println("Enter Aadhaar No:");
-        scan.nextLine();
-        String aadhaarNo =scan.nextLine();
+        System.out.println("Enter Username:");
+        String aadhaarNo =scan.readString();
 
-
-        User user = new User(firstName, lastName, birthDate, mobileNo, aadhaarNo);
 
         System.out.println("Let's create your first Account - ");
         System.out.println("Enter Opening Balance:");
-        Long balance = scan.nextLong();
-        scan.nextLine();
+        Double balance = scan.readDouble();
 
         System.out.println("Please Enter Security PIN: ");
-        String pin = scan.nextLine();
+        Integer pin = scan.readInt();
 
-        user.setPin(pin);
-        Account account = new Account(user.getAadhaar() + "-1", user, balance);
-        user.getAccounts().add(account);
+        return new RegistrationRequest(aadhaarNo, firstName, lastName, mobileNo, birthDate, balance, pin);
 
-        return user;
+//
+//        user.getAccounts().add(account);
+//
+//        return user;
     }
 
 }
