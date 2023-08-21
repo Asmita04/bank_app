@@ -1,28 +1,25 @@
 package com.bluesky.bankapp.collectors;
 
+import com.bluesky.bankapp.io.InputReader;
 import com.bluesky.bankapp.model.MoneyTransferRequest;
 
-import java.util.Scanner;
+public class MoneyTransferDataCollector implements DataCollector {
 
-public class MoneyTransferDataCollector {
+    private final InputReader scan;
 
-    private Scanner scan;
-
-    public MoneyTransferDataCollector(Scanner scan) {
+    public MoneyTransferDataCollector(InputReader scan) {
         this.scan = scan;
     }
 
+    @Override
     public MoneyTransferRequest collect() {
         System.out.println("Money transferring from one account to other!");
-        System.out.println("Enter account to which you wanted to send money:");
-        String receiverAccount = scan.nextLine();
-
-        System.out.println("Enter payee account number:");
-        String senderAccount = scan.nextLine();
+        System.out.println("Enter beneficiary username:");
+        String receiverAccount = scan.readString();
 
         System.out.println("\nEnter Amount: ");
-        int dAmount = scan.nextInt();
+        int dAmount = scan.readInt();
 
-        return new MoneyTransferRequest(senderAccount, receiverAccount, dAmount);
+        return new MoneyTransferRequest(receiverAccount, dAmount);
     }
 }

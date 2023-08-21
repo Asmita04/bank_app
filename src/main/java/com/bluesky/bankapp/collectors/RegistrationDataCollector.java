@@ -1,39 +1,48 @@
 package com.bluesky.bankapp.collectors;
 
-import com.bluesky.bankapp.User;
+import com.bluesky.bankapp.io.InputReader;
+import com.bluesky.bankapp.model.RegistrationRequest;
 
-import java.util.Scanner;
+public class RegistrationDataCollector implements DataCollector {
 
-public class RegistrationDataCollector {
+    private final InputReader scan;
 
-    private Scanner scan;
-
-    public RegistrationDataCollector(Scanner scan) {
+    public RegistrationDataCollector(InputReader scan) {
         this.scan = scan;
     }
 
-    public User collect() {
+    @Override
+    public RegistrationRequest collect() {
 
-        System.out.println("Enter name:");
-        scan.nextLine();
-        String userName = scan.nextLine();
+        System.out.println("Enter First Name:");
+        String firstName = scan.readString();
+
+        System.out.println("Enter Last Name:");
+        String lastName = scan.readString();
 
         System.out.println("Enter Birth Date:");
-        String birthDate = scan.nextLine();
+        String birthDate = scan.readString();
 
         System.out.println("Enter Mobile:");
-        long mobileNo = scan.nextLong();
+        String mobileNo = scan.readString();
 
-        System.out.println("Enter Adhaar No:");
-        scan.nextLine();
-        String adhaarNo =scan.nextLine();
+        System.out.println("Enter Username:");
+        String aadhaarNo =scan.readString();
 
-        System.out.println("Enter Balance:");
-        int balance = scan.nextInt();
 
-        User user = new User(userName, birthDate, mobileNo, adhaarNo, balance);
+        System.out.println("Let's create your first Account - ");
+        System.out.println("Enter Opening Balance:");
+        Double balance = scan.readDouble();
 
-        return user;
+        System.out.println("Please Enter Security PIN: ");
+        Integer pin = scan.readInt();
+
+        return new RegistrationRequest(aadhaarNo, firstName, lastName, mobileNo, birthDate, balance, pin);
+
+//
+//        user.getAccounts().add(account);
+//
+//        return user;
     }
 
 }
