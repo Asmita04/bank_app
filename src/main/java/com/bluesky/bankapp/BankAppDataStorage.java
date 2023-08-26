@@ -31,35 +31,6 @@ public class BankAppDataStorage {
         return null;
     }
 
-    //Removing Account
-    public void removeAccount(String accountNo){
-        if (userMap.containsKey(accountNo)) {
-            userMap.remove(accountNo);
-            System.out.println("1 Account Deleted!");
-        }
-        else {
-            System.out.println("Account is not present!");
-        }
-    }
-
-    public void transferMoney(MoneyTransferRequest request){
-//        User sender =userMap.get(request.getSourceAcc());
-//        User receiver =userMap.get(request.getTargetAcc());
-//
-//        if (sender.getBalance() >= request.getAmount()) {
-//            sender.setBalance(sender.getBalance() - request.getAmount());
-//            receiver.setBalance(receiver.getBalance() + request.getAmount());
-//
-//        } else {
-//            System.out.println("Insufficient Balance!");
-//        }
-//
-//        userMap.put(request.getSourceAcc(), sender);
-//        userMap.put(request.getTargetAcc(), receiver);
-
-
-    }
-
 
     public boolean userExists(User user) {
         return userExists(user.getUserName());

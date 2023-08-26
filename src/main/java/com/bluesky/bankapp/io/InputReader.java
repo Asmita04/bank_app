@@ -6,8 +6,8 @@ public class InputReader {
 
     private Scanner scanner;
 
-    public InputReader(Scanner scanner) {
-        this.scanner = scanner;
+    public InputReader() {
+        this.scanner = new Scanner(System.in);
     }
 
     public String readString() {

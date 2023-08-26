@@ -1,6 +1,7 @@
 package com.bluesky.bankapp.io;
 
 import com.bluesky.bankapp.BankAppDataStorage;
+import com.bluesky.bankapp.executors.ActionExecutor;
 import com.bluesky.bankapp.model.Account;
 import com.bluesky.bankapp.model.RegistrationRequest;
 import com.bluesky.bankapp.model.User;
@@ -49,13 +50,12 @@ public class StartupDataLoader {
                 dataStorage.addUser(user);
             }
         }
+
     }
 
     private List<RegistrationRequest> loadAllUsers() throws IOException {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-
-
-
+        System.out.println("Inside StartupDataLoader:loadAllUsers");
 
         URL url = classloader.getResource("data");
         String path = url.getPath();

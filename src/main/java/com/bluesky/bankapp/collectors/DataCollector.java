@@ -4,4 +4,5 @@ import com.bluesky.bankapp.model.ActionRequest;
 
 public interface DataCollector {
      ActionRequest collect();
+
 }
