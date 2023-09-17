@@ -3,16 +3,21 @@ package com.bluesky.bankapp.collectors;
 import com.bluesky.bankapp.io.InputReader;
 import com.bluesky.bankapp.model.RegistrationRequest;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class RegistrationDataCollector implements DataCollector {
 
     private final InputReader scan;
+
 
     public RegistrationDataCollector(InputReader scan) {
         this.scan = scan;
     }
 
     @Override
-    public RegistrationRequest collect() {
+    public RegistrationRequest collect() throws SQLException {
 
         System.out.println("Enter First Name:");
         String firstName = scan.readString();
@@ -26,9 +31,8 @@ public class RegistrationDataCollector implements DataCollector {
         System.out.println("Enter Mobile:");
         String mobileNo = scan.readString();
 
-        System.out.println("Enter Username:");
-        String aadhaarNo =scan.readString();
-
+        System.out.println("Enter AdhaarNo:");
+        String username =scan.readString();
 
         System.out.println("Let's create your first Account - ");
         System.out.println("Enter Opening Balance:");
@@ -37,7 +41,7 @@ public class RegistrationDataCollector implements DataCollector {
         System.out.println("Please Enter Security PIN: ");
         Integer pin = scan.readInt();
 
-        return new RegistrationRequest(aadhaarNo, firstName, lastName, mobileNo, birthDate, balance, pin);
+        return new RegistrationRequest(username, firstName, lastName, mobileNo, birthDate, balance, pin);
 
 //
 //        user.getAccounts().add(account);

@@ -35,14 +35,14 @@ public class StartupDataLoader {
                     request.getUsername());
             user.setPin(request.getPin());
 
-            Account account = new Account(user.getUserName() + "-1", user, request.getBalance());
+            Account account = new Account(user.getUserName() + "-1", user.getUserName(), request.getBalance(), true);
 
             // At the time of registration, first account is always
             // primary account
             account.setPrimary(true);
 
             user.getAccounts().add(account);
-            boolean exists = dataStorage.userExists(user);
+            boolean exists = true;//dataStorage.userExists(user);
             if (exists) {
                 System.out.println("User already exists, please login!");
             } else {

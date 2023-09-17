@@ -18,7 +18,7 @@ public class OpenNewAccountActionExecutor implements ActionExecutor {
         Double balance = context.getScan().readDouble();
         User user = context.getCurr();
         Account account = new Account(user.getUserName() + "-" + (user.getAccounts().size() + 1)
-                , context.getCurr(), balance);
+                , context.getCurr().getUserName(), balance, false);
         user.getAccounts().add(account);
     }
 

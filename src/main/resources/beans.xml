@@ -15,11 +15,6 @@
         <constructor-arg name="context" ref = "context"/>
     </bean>
 
-
-<!--    <bean id="factory" class="com.bluesky.bankapp.collectors.DataCollectorFactory">-->
-<!--        <constructor-arg name="scan" ref="scan"/>-->
-<!--    </bean>-->
-
     <bean id="context" class="com.bluesky.bankapp.security.SessionContext">
         <constructor-arg name="scan" ref="scan"/>
     </bean>

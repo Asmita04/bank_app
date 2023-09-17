@@ -3,14 +3,15 @@ package com.bluesky.bankapp.model;
 public class Account {
 
     private String accNum;
-    private User user;
+    private String username;
     private Double balance;
     private boolean isPrimary;
 
-    public Account(String accNum, User user, Double balance) {
+    public Account(String accNum, String user, Double balance, boolean isPrimary) {
         this.accNum = accNum;
-        this.user = user;
+        this.username = user;
         this.balance = balance;
+        this.isPrimary = isPrimary;
     }
 
     public String getAccNum() {
@@ -21,12 +22,12 @@ public class Account {
         this.accNum = accNum;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Double getBalance() {
