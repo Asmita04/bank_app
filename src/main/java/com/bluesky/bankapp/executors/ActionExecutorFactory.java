@@ -35,6 +35,8 @@ public class ActionExecutorFactory {
         } else if (UserAction.MONEY_TRANSFER.equals(action)) {
             return new MoneyTransferActionExecutor(dataStorage,
                     (MoneyTransferDataCollector) collector.build(action), context);
+        } else if (UserAction.PRINT_MINI_STATEMENT.equals(action)) {
+            return new MiniStatementActionExecutor(context);
         }
         return null;
     }

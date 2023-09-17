@@ -32,9 +32,9 @@ public class BankAppDataStorage {
     }
 
 
-    public boolean userExists(User user) {
-        return userExists(user.getUserName());
-    }
+//    public boolean userExists(User user) {
+//        return userExists(user.getUserName());
+//    }
 
     public boolean userExists(String username) {
         for (User user : users) {

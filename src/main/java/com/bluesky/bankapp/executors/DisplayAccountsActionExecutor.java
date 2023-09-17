@@ -4,6 +4,8 @@ import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.ui.UserScreen;
 
+import java.sql.SQLException;
+
 public class DisplayAccountsActionExecutor implements ActionExecutor {
 
     private SessionContext context;
@@ -12,7 +14,7 @@ public class DisplayAccountsActionExecutor implements ActionExecutor {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws SQLException {
         User user = context.getCurr();
         UserScreen.displayUserDetails(user);
         System.out.println("Press Enter to continue...");
