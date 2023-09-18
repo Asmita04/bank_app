@@ -7,34 +7,42 @@ import com.bluesky.bankapp.model.UserCreds;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserCredsDao {
 
-    public void addUserCreds(UserCreds userCreds) throws  Exception {
-        Connection con = DatabaseConnection.getConnection();
-        PreparedStatement pstmt= con.prepareStatement("INSERT INTO LoginCredentials (username, pin ) VALUES (?,?)");
+    public void addUserCreds(UserCreds userCreds)   {
+
+        try(Connection con=DatabaseConnection.getConnection()) {
+            PreparedStatement pstmt= con.prepareStatement("INSERT INTO LoginCredentials (username, pin ) VALUES (?,?)");
 
 
-        pstmt.setString(1,userCreds.getUsername());
-        pstmt.setInt(2,userCreds.getPin());
-        pstmt.executeUpdate();
+            pstmt.setString(1,userCreds.getUsername());
+            pstmt.setInt(2,userCreds.getPin());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public UserCreds getUserCreds(LoginRequest userCreds) throws  Exception {
-        Connection con = DatabaseConnection.getConnection();
-        PreparedStatement pstmt= con.prepareStatement("SELECT * FROM LoginCredentials WHERE username = ? and pin = ?");
+    public UserCreds getUserCreds(LoginRequest userCreds)  {
+       try( Connection con = DatabaseConnection.getConnection()) {
+           PreparedStatement pstmt = con.prepareStatement("SELECT * FROM LoginCredentials WHERE username = ? and pin = ?");
 
 
-        pstmt.setString(1,userCreds.getAadhaar());
-        pstmt.setInt(2,userCreds.getPin());
-        ResultSet resultSet = pstmt.executeQuery();
-        while (resultSet.next()) {
-            UserCreds creds = new UserCreds(
-                    resultSet.getString(1),
-                    resultSet.getInt(2)
-            );
-            return creds;
-        }
+           pstmt.setString(1, userCreds.getAadhaar());
+           pstmt.setInt(2, userCreds.getPin());
+           ResultSet resultSet = pstmt.executeQuery();
+           while (resultSet.next()) {
+               UserCreds creds = new UserCreds(
+                       resultSet.getString(1),
+                       resultSet.getInt(2)
+               );
+               return creds;
+           }
+       }catch(Exception e){throw new RuntimeException(e);}
+
         return null;
     }
 }

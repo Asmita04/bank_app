@@ -17,7 +17,7 @@ public class RegistrationDataCollector implements DataCollector {
     }
 
     @Override
-    public RegistrationRequest collect() throws SQLException {
+    public RegistrationRequest collect()  {
 
         System.out.println("Enter First Name:");
         String firstName = scan.readString();

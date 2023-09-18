@@ -20,10 +20,14 @@ public class DatabaseConnection {
 
       static String JDBC_URL = "jdbc:mysql://localhost:3306/bank_app";
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection()  {
         String Username="root";
         String Password="Root123";
-        return DriverManager.getConnection(JDBC_URL,Username,Password);
+        try {
+            return DriverManager.getConnection(JDBC_URL,Username,Password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
