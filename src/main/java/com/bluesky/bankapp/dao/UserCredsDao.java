@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class UserCredsDao {
 
-    public void addUserCreds(UserCreds userCreds)   {
+    public void addUserCreds(UserCreds userCreds){
 
         try(Connection con=DatabaseConnection.getConnection()) {
             PreparedStatement pstmt= con.prepareStatement("INSERT INTO LoginCredentials (username, pin ) VALUES (?,?)");

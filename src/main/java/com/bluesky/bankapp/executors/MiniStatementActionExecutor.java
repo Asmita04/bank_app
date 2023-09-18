@@ -19,7 +19,7 @@ public class MiniStatementActionExecutor implements ActionExecutor {
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute(){
 
         User currentUser = context.getCurr();
         List<Transaction> transactions = transactionDao.getTransactions(currentUser.getUserName());

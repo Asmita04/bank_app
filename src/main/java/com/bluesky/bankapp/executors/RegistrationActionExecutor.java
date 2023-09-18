@@ -30,7 +30,7 @@ public class RegistrationActionExecutor implements ActionExecutor {
         this.dataStorage = dataStorage;
     }
 
-    public void execute() throws Exception {
+    public void execute(){
 
         RegistrationRequest request = collector.collect();
 

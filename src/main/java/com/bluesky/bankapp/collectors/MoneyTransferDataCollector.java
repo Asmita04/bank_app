@@ -16,7 +16,7 @@ public class MoneyTransferDataCollector implements DataCollector {
     }
 
     @Override
-    public MoneyTransferRequest collect() throws SQLException {
+    public MoneyTransferRequest collect()  {
 
 //        Connection con = DatabaseConnection.getConnection();
 //        PreparedStatement pstmt= con.prepareStatement("INSERT INTO User (username,firstName , lastName,birthDate,mobileNo,pin,balance ) VALUES (?,?,?,?,?,?,?)");
