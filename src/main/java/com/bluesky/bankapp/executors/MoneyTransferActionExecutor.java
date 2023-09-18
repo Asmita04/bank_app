@@ -35,7 +35,7 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
     }
 
     @Override
-    public void execute() throws Exception {
+    public void execute(){
 
 
 

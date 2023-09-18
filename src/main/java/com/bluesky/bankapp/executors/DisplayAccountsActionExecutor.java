@@ -14,7 +14,7 @@ public class DisplayAccountsActionExecutor implements ActionExecutor {
     }
 
     @Override
-    public void execute() throws SQLException {
+    public void execute(){
         User user = context.getCurr();
         UserScreen.displayUserDetails(user);
         System.out.println("Press Enter to continue...");

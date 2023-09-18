@@ -24,7 +24,7 @@ public class StartupDataLoader {
         this.dataStorage = dataStorage;
     }
 
-    public void initDatabase() throws IOException {
+    public void initDatabase(){
         List<RegistrationRequest> requests = loadAllUsers();
         for (RegistrationRequest request : requests) {
 
@@ -53,7 +53,7 @@ public class StartupDataLoader {
 
     }
 
-    private List<RegistrationRequest> loadAllUsers() throws IOException {
+    private List<RegistrationRequest> loadAllUsers()  {
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
         System.out.println("Inside StartupDataLoader:loadAllUsers");
 
@@ -63,22 +63,25 @@ public class StartupDataLoader {
 
         List<RegistrationRequest> requests = new ArrayList<>();
 
-        for (File file : files) {
-            System.out.println(file.getAbsolutePath());
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            RegistrationRequest request = new RegistrationRequest(
-                    reader.readLine(),
-                    reader.readLine(),
-                    reader.readLine(),
-                    reader.readLine(),
-                    reader.readLine(),
-                    Double.parseDouble(reader.readLine().trim()),
-                    Integer.parseInt(reader.readLine().trim())
-            );
-            reader.close();
-            requests.add(request);
-        }
+        try {
+            for (File file : files) {
+                System.out.println(file.getAbsolutePath());
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                RegistrationRequest request = new RegistrationRequest(
+                        reader.readLine(),
+                        reader.readLine(),
+                        reader.readLine(),
+                        reader.readLine(),
+                        reader.readLine(),
+                        Double.parseDouble(reader.readLine().trim()),
+                        Integer.parseInt(reader.readLine().trim())
+                );
+                reader.close();
+                requests.add(request);
+            }
 
-        return requests;
+            return requests;
+        }catch (Exception e){throw new RuntimeException(e);}
     }
+
 }
