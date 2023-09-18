@@ -15,7 +15,7 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         Scanner sc= new Scanner(System.in);
 
@@ -32,7 +32,11 @@ public class BankApplication {
             choice = sc.nextInt();
             UserAction action = UserAction.forId(choice);
             ActionExecutor actionExecutor = executorBuilder.build(action);
-            actionExecutor.execute();
+            try {
+                actionExecutor.execute();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         } while (choice != -1);
     }
 
