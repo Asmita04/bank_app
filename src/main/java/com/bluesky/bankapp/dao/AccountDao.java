@@ -11,20 +11,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountDao {
-    public void addAccount(Account account) throws Exception {
-        Connection con = DatabaseConnection.getConnection();
-        PreparedStatement pstmt= con.prepareStatement("INSERT INTO Accounts VALUES (?, ?, ?, ?)");
+    public void addAccount(Account account)  {
+
+        try(Connection con = DatabaseConnection.getConnection()){
+            PreparedStatement pstmt= con.prepareStatement("INSERT INTO Accounts VALUES (?, ?, ?, ?)");
 
 
-        pstmt.setString(1, account.getAccNum());
-        pstmt.setInt(2, account.getBalance().intValue());
-        pstmt.setString(3, account.getUsername());
-        pstmt.setBoolean(4, account.getPrimary());
-        pstmt.executeUpdate();
+            pstmt.setString(1, account.getAccNum());
+            pstmt.setInt(2, account.getBalance().intValue());
+            pstmt.setString(3, account.getUsername());
+            pstmt.setBoolean(4, account.getPrimary());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    public List<Account> getAccounts(String userName) throws Exception {
-        Connection con = DatabaseConnection.getConnection();
+    public List<Account> getAccounts(String userName)  {
+
+        try(Connection con = DatabaseConnection.getConnection()){
+
+
         PreparedStatement pstmt= con.prepareStatement("SELECT * FROM ACCOUNTS WHERE USERNAME = ? ");
 
 
@@ -42,14 +50,23 @@ public class AccountDao {
 
         }
         return accounts;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void updateAccount(Account account) throws Exception {
-        String sql = "UPDATE ACCOUNTS SET BALANCE = ? WHERE ACCNO = ?";
-        Connection conn = DatabaseConnection.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setInt(1, account.getBalance().intValue());
-        ps.setString(2, account.getAccNum());
-        ps.executeUpdate();
+    public void updateAccount(Account account)  {
+        try(Connection conn =DatabaseConnection.getConnection()){
+            String sql = "UPDATE ACCOUNTS SET BALANCE = ? WHERE ACCNO = ?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, account.getBalance().intValue());
+            ps.setString(2, account.getAccNum());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

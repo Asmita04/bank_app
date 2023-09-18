@@ -17,7 +17,7 @@ public class LoginDataCollector implements DataCollector {
     }
 
     @Override
-    public LoginRequest collect() throws SQLException {
+    public LoginRequest collect(){
 
         System.out.println("Username: ");
         String aadhaar = scan.readString();

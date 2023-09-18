@@ -5,7 +5,9 @@ import com.bluesky.bankapp.model.Transaction;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MiniStatementActionExecutor implements ActionExecutor {
 
@@ -24,6 +26,7 @@ public class MiniStatementActionExecutor implements ActionExecutor {
 
         for (Transaction t : transactions) {
             System.out.println(t);
+            transactions.remove(t);
         }
 
     }

@@ -56,7 +56,7 @@ public class TransactionDao {
             ps.setString(4, transaction.getTargetAccountNum());
             ps.setInt(5, transaction.getAmount());
 
-           ps.executeUpdate();
+            ps.executeUpdate();
 
         }  catch (SQLException e) {
             throw new RuntimeException(e);
