@@ -1,5 +1,6 @@
 package com.bluesky.bankapp.executors;
 
+import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.dao.TransactionDao;
 import com.bluesky.bankapp.model.Transaction;
 import com.bluesky.bankapp.model.User;
@@ -11,7 +12,7 @@ import java.util.ListIterator;
 
 public class MiniStatementActionExecutor implements ActionExecutor {
 
-    private TransactionDao transactionDao = new TransactionDao();
+    private TransactionDao transactionDao = AppConfig.getApplicationContext().getBean(TransactionDao.class);
     private SessionContext context;
 
     public MiniStatementActionExecutor(SessionContext context) {

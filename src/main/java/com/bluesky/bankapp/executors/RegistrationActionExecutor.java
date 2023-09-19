@@ -1,9 +1,11 @@
 package com.bluesky.bankapp.executors;
 
+import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
+import com.bluesky.bankapp.dao.TransactionDao;
 import com.bluesky.bankapp.dao.UserCredsDao;
 import com.bluesky.bankapp.dao.UserDao;
 import com.bluesky.bankapp.model.Account;
@@ -18,9 +20,9 @@ import java.sql.SQLException;
 
 public class RegistrationActionExecutor implements ActionExecutor {
     private SessionContext context;
-    private UserDao userDao = new UserDao();
-    private AccountDao accountDao = new AccountDao();
-    private UserCredsDao userCredsDao = new UserCredsDao();
+    private final UserDao userDao = AppConfig.getApplicationContext().getBean(UserDao.class);
+    private final AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
+    private UserCredsDao userCredsDao = AppConfig.getApplicationContext().getBean(UserCredsDao.class);
     private RegistrationDataCollector collector;
     private BankAppDataStorage dataStorage;
 

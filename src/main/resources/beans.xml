@@ -8,31 +8,39 @@
         <constructor-arg ref="dataStorage"/>
     </bean>
 
-    <bean id="dataStorage" class="com.bluesky.bankapp.BankAppDataStorage">
-    </bean>
+    <bean id="dataStorage" class="com.bluesky.bankapp.BankAppDataStorage"/>
+
 
     <bean id="userActionsMenu" class="com.bluesky.bankapp.ui.UserActionsMenu">
-        <constructor-arg name="context" ref = "context"/>
+        <constructor-arg ref = "context"/>
     </bean>
 
     <bean id="context" class="com.bluesky.bankapp.security.SessionContext">
-        <constructor-arg name="scan" ref="scan"/>
+        <constructor-arg ref="scan"/>
     </bean>
 
     <bean id="scan" class="com.bluesky.bankapp.io.InputReader"></bean>
 
     <bean id="collector" class="com.bluesky.bankapp.collectors.DataCollectorFactory">
-        <constructor-arg name="scan" ref="scan"/>
+        <constructor-arg ref="scan"/>
     </bean>
 
 
 
     <bean id="executorBuilder" class="com.bluesky.bankapp.executors.ActionExecutorFactory">
-        <constructor-arg name="collector" ref="collector" />
-        <constructor-arg name="context" ref = "context"/>
+        <constructor-arg ref="collector" />
+        <constructor-arg ref = "context"/>
         <constructor-arg ref="dataStorage"/>
 
     </bean>
+
+    <bean id="userDao" class="com.bluesky.bankapp.dao.UserDao"/>
+
+    <bean id="accountDao" class="com.bluesky.bankapp.dao.AccountDao"/>
+
+    <bean id="transactionDao" class="com.bluesky.bankapp.dao.TransactionDao"/>
+
+    <bean id="userCredsDao" class="com.bluesky.bankapp.dao.UserCredsDao"/>
 
    <!-- more bean definitions go here -->
 

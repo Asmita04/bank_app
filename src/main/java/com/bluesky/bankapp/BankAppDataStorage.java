@@ -31,11 +31,6 @@ public class BankAppDataStorage {
         return null;
     }
 
-
-//    public boolean userExists(User user) {
-//        return userExists(user.getUserName());
-//    }
-
     public boolean userExists(String username) {
         for (User user : users) {
             if (user.getUserName().equals(username)) {

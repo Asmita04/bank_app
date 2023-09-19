@@ -15,11 +15,11 @@ import java.util.Scanner;
  **/
 
 public class BankApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         Scanner sc= new Scanner(System.in);
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
+        ApplicationContext applicationContext = AppConfig.getApplicationContext();
         int choice;
        // InputReader scan = new InputReader();
         UserActionsMenu userActionsMenu= applicationContext.getBean(UserActionsMenu.class);
@@ -32,7 +32,11 @@ public class BankApplication {
             choice = sc.nextInt();
             UserAction action = UserAction.forId(choice);
             ActionExecutor actionExecutor = executorBuilder.build(action);
-            actionExecutor.execute();
+            try {
+                actionExecutor.execute();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         } while (choice != -1);
     }
 
