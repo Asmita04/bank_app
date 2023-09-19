@@ -1,5 +1,6 @@
 package com.bluesky.bankapp.dao;
 
+import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.Account;
 import com.bluesky.bankapp.model.User;
@@ -10,9 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+
 public class UserDao {
 
-    private AccountDao accountDao = new AccountDao();
+
+    private AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
+
     public void insertUser(User user)  {
 
 

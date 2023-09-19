@@ -1,5 +1,6 @@
 package com.bluesky.bankapp.executors;
 
+import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
@@ -19,9 +20,9 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
 
     private final BankAppDataStorage dataStorage;
     private final MoneyTransferDataCollector collector;
-    private final UserDao userDao = new UserDao();
-    private final AccountDao accountDao = new AccountDao();
-    private final TransactionDao transactionDao = new TransactionDao();
+    private final UserDao userDao = AppConfig.getApplicationContext().getBean(UserDao.class);
+    private final AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
+    private TransactionDao transactionDao = AppConfig.getApplicationContext().getBean(TransactionDao.class);
 
     private final SessionContext context;
 

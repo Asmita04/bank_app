@@ -19,7 +19,7 @@ public class BankApplication {
 
         Scanner sc= new Scanner(System.in);
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
+        ApplicationContext applicationContext = AppConfig.getApplicationContext();
         int choice;
        // InputReader scan = new InputReader();
         UserActionsMenu userActionsMenu= applicationContext.getBean(UserActionsMenu.class);
