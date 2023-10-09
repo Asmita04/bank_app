@@ -2,15 +2,15 @@ package com.bluesky.bankapp.ui;
 
 import com.bluesky.bankapp.model.UserAction;
 import com.bluesky.bankapp.security.SessionContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
+@Component("")
 public class UserActionsMenu {
-
     private SessionContext context;
-
     public UserActionsMenu(SessionContext context) {
         this.context = context;
     }
-
     public void displayActions() {
 
         System.out.println("\n\n\n ===============================================");

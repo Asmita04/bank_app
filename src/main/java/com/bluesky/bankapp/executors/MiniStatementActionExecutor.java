@@ -5,17 +5,23 @@ import com.bluesky.bankapp.dao.TransactionDao;
 import com.bluesky.bankapp.model.Transaction;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
+@Component
 public class MiniStatementActionExecutor implements ActionExecutor {
 
-    private TransactionDao transactionDao = AppConfig.getApplicationContext().getBean(TransactionDao.class);
+   @Autowired
+    private TransactionDao transactionDao ;
+    @Autowired
     private SessionContext context;
 
-    public MiniStatementActionExecutor(SessionContext context) {
+    public MiniStatementActionExecutor(TransactionDao transactionDao, SessionContext context) {
+        this.transactionDao = transactionDao;
         this.context = context;
     }
 

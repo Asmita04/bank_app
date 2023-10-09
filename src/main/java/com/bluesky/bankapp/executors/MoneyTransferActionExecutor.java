@@ -12,26 +12,36 @@ import com.bluesky.bankapp.model.Transaction;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.util.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.security.auth.login.AccountException;
 import java.sql.SQLException;
-
+@Component
 public class MoneyTransferActionExecutor implements ActionExecutor {
+    @Autowired
+    private  BankAppDataStorage dataStorage;
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private  MoneyTransferDataCollector collector;
+    @Autowired
+    private  UserDao userDao;
+    @Autowired
+    private  AccountDao accountDao;
+    @Autowired
+    private TransactionDao transactionDao ;
+    @Autowired
+    private  SessionContext context;
 
-    private final BankAppDataStorage dataStorage;
-    private final MoneyTransferDataCollector collector;
-    private final UserDao userDao = AppConfig.getApplicationContext().getBean(UserDao.class);
-    private final AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
-    private TransactionDao transactionDao = AppConfig.getApplicationContext().getBean(TransactionDao.class);
-
-    private final SessionContext context;
-
-
-    public MoneyTransferActionExecutor(BankAppDataStorage dataStorage
-            , MoneyTransferDataCollector collector
-    , SessionContext context) {
+    public MoneyTransferActionExecutor(BankAppDataStorage dataStorage, ApplicationContext applicationContext, MoneyTransferDataCollector collector, UserDao userDao, AccountDao accountDao, TransactionDao transactionDao, SessionContext context) {
         this.dataStorage = dataStorage;
+        this.applicationContext = applicationContext;
         this.collector = collector;
+        this.userDao = userDao;
+        this.accountDao = accountDao;
+        this.transactionDao = transactionDao;
         this.context = context;
     }
 

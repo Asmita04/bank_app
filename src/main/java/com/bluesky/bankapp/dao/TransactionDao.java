@@ -2,6 +2,8 @@ package com.bluesky.bankapp.dao;
 
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.Transaction;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TransactionDao {
+
 
 
     public List<Transaction> getTransactions(String userName) {

@@ -2,9 +2,13 @@ package com.bluesky.bankapp.collectors;
 
 import com.bluesky.bankapp.io.InputReader;
 import com.bluesky.bankapp.model.UserAction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DataCollectorFactory {
 
+    @Autowired
     private final InputReader scan;
 
     public DataCollectorFactory(InputReader scan) {

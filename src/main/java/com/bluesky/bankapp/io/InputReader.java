@@ -1,7 +1,10 @@
 package com.bluesky.bankapp.io;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Scanner;
 
+@Component
 public class InputReader {
 
     private Scanner scanner;

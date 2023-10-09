@@ -3,12 +3,14 @@ package com.bluesky.bankapp.dao;
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.LoginRequest;
 import com.bluesky.bankapp.model.UserCreds;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class UserCredsDao {
 
     public void addUserCreds(UserCreds userCreds){

@@ -4,6 +4,9 @@ import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.Account;
 import com.bluesky.bankapp.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +15,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 
+@Component
 public class UserDao {
+    @Autowired
+    private AccountDao accountDao;
+    public UserDao(){}
 
-
-    private AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
+    public UserDao(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
     public void insertUser(User user)  {
 

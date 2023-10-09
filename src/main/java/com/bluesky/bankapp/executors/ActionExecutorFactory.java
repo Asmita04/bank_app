@@ -7,37 +7,39 @@ import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.model.UserAction;
 import com.bluesky.bankapp.security.SessionContext;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
-public class ActionExecutorFactory {
-    private final SessionContext context;
-    private final DataCollectorFactory collector;
-    private final BankAppDataStorage dataStorage;
+@Component
 
-    public ActionExecutorFactory(SessionContext context, DataCollectorFactory collector, BankAppDataStorage dataStorage) {
-        this.context = context;
-        this.collector = collector;
-        this.dataStorage = dataStorage;
-    }
+public class ActionExecutorFactory implements ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
 
     public ActionExecutor build(UserAction action) {
         if (action.equals(UserAction.REGISTER)) {
-            return new RegistrationActionExecutor(context,
-                    (RegistrationDataCollector) collector.build(action), dataStorage);
+            return applicationContext.getBean(RegistrationActionExecutor.class);
         } else if (action.equals(UserAction.DISPLAY_ACCOUNTS)) {
-            return new DisplayAccountsActionExecutor(context);
+            return applicationContext.getBean(DisplayAccountsActionExecutor.class);
         } else if (UserAction.LOGOUT.equals(action)) {
-            return new LogoutActionExecutor(context);
+            return applicationContext.getBean(LogoutActionExecutor.class);
         } else if (UserAction.OPEN_NEW_ACCOUNT.equals(action)) {
-            return new OpenNewAccountActionExecutor(context);
+            return applicationContext.getBean(OpenNewAccountActionExecutor.class);
         } else if (UserAction.LOGIN.equals(action)) {
-            return new LoginActionExecutor(context, dataStorage,
-                    (LoginDataCollector) collector.build(action));
+            return applicationContext.getBean(LoginActionExecutor.class);
         } else if (UserAction.MONEY_TRANSFER.equals(action)) {
-            return new MoneyTransferActionExecutor(dataStorage,
-                    (MoneyTransferDataCollector) collector.build(action), context);
+            return applicationContext.getBean(MoneyTransferActionExecutor.class);
         } else if (UserAction.PRINT_MINI_STATEMENT.equals(action)) {
-            return new MiniStatementActionExecutor(context);
+            return applicationContext.getBean(MiniStatementActionExecutor.class);
         }
         return null;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
     }
 }

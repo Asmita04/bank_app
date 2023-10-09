@@ -2,13 +2,16 @@ package com.bluesky.bankapp.collectors;
 
 import com.bluesky.bankapp.io.InputReader;
 import com.bluesky.bankapp.model.RegistrationRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class RegistrationDataCollector implements DataCollector {
-
+@Component
+public class  RegistrationDataCollector implements DataCollector {
+    @Autowired
     private final InputReader scan;
 
 

@@ -2,6 +2,7 @@ package com.bluesky.bankapp.dao;
 
 import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.Account;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AccountDao {
     public void addAccount(Account account)  {
 
