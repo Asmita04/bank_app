@@ -19,7 +19,6 @@ public class MiniStatementActionExecutor implements ActionExecutor {
     private TransactionDao transactionDao ;
     @Autowired
     private SessionContext context;
-
     public MiniStatementActionExecutor(TransactionDao transactionDao, SessionContext context) {
         this.transactionDao = transactionDao;
         this.context = context;
@@ -31,13 +30,17 @@ public class MiniStatementActionExecutor implements ActionExecutor {
         User currentUser = context.getCurr();
         List<Transaction> transactions = transactionDao.getTransactions(currentUser.getUserName());
 
-        for (Transaction t : transactions) {
+//        for (Transaction t : transactions) {
+//            System.out.println(t);
+//            transactions.remove(t);
+//        }
+        Iterator<Transaction> iterator = transactions.iterator();
+        while (iterator.hasNext()) {
+            Transaction t = iterator.next();
             System.out.println(t);
-            transactions.remove(t);
+            iterator.remove();
         }
-
     }
-
     @Override
     public boolean validate() {
         return false;

@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
@@ -16,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.AccountException;
-import java.sql.SQLException;
 @Component
 public class MoneyTransferActionExecutor implements ActionExecutor {
     @Autowired
@@ -48,8 +45,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
     @Override
     public void execute(){
 
-
-
         // get receivers primary account
         // debit from sender primary and credit to receivers primary account
         // save into DB
@@ -60,6 +55,11 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
         // get senders primary account
         User sourceUser = context.getCurr();
         User targetUser = userDao.getUserDetails(targetUserName);
+
+        if ( targetUser == null) {
+            System.out.println("Account doesn't exist");
+            return;
+        }
 
         Account sourcePrimaryAccount = UserUtils.getPrimaryAccount(sourceUser);
         Account targetPrimaryAccount = UserUtils.getPrimaryAccount(targetUser);
@@ -75,7 +75,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
         targetPrimaryAccount.setBalance(targetPrimaryAccount.getBalance() + amount);
 
         // save/persist in DB
-
         accountDao.updateAccount(sourcePrimaryAccount);
         accountDao.updateAccount(targetPrimaryAccount);
 
@@ -89,8 +88,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
                 amount
         );
         transactionDao.insertTransaction(transaction);
-
-
 
     }
 

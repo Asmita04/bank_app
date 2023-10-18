@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
@@ -12,12 +11,7 @@ import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.model.UserCreds;
 import com.bluesky.bankapp.security.SessionContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 
 @Component
@@ -50,10 +44,6 @@ public class RegistrationActionExecutor implements ActionExecutor {
     public void execute(){
 
         RegistrationRequest request = collector.collect();
-
-        // add user
-        // add account
-        // add user creds
 
         User user = new User(request.getFirstName(),
                 request.getLastName(),

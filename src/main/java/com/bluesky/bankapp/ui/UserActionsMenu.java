@@ -5,7 +5,7 @@ import com.bluesky.bankapp.security.SessionContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-@Component("")
+@Component
 public class UserActionsMenu {
     private SessionContext context;
     public UserActionsMenu(SessionContext context) {
