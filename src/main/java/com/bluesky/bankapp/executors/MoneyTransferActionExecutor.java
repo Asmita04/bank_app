@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
@@ -12,33 +11,39 @@ import com.bluesky.bankapp.model.Transaction;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.util.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
-import javax.security.auth.login.AccountException;
-import java.sql.SQLException;
-
+@Component
 public class MoneyTransferActionExecutor implements ActionExecutor {
+    @Autowired
+    private  BankAppDataStorage dataStorage;
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private  MoneyTransferDataCollector collector;
+    @Autowired
+    private  UserDao userDao;
+    @Autowired
+    private  AccountDao accountDao;
+    @Autowired
+    private TransactionDao transactionDao ;
+    @Autowired
+    private  SessionContext context;
 
-    private final BankAppDataStorage dataStorage;
-    private final MoneyTransferDataCollector collector;
-    private final UserDao userDao = AppConfig.getApplicationContext().getBean(UserDao.class);
-    private final AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
-    private TransactionDao transactionDao = AppConfig.getApplicationContext().getBean(TransactionDao.class);
-
-    private final SessionContext context;
-
-
-    public MoneyTransferActionExecutor(BankAppDataStorage dataStorage
-            , MoneyTransferDataCollector collector
-    , SessionContext context) {
+    public MoneyTransferActionExecutor(BankAppDataStorage dataStorage, ApplicationContext applicationContext, MoneyTransferDataCollector collector, UserDao userDao, AccountDao accountDao, TransactionDao transactionDao, SessionContext context) {
         this.dataStorage = dataStorage;
+        this.applicationContext = applicationContext;
         this.collector = collector;
+        this.userDao = userDao;
+        this.accountDao = accountDao;
+        this.transactionDao = transactionDao;
         this.context = context;
     }
 
     @Override
     public void execute(){
-
-
 
         // get receivers primary account
         // debit from sender primary and credit to receivers primary account
@@ -50,6 +55,11 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
         // get senders primary account
         User sourceUser = context.getCurr();
         User targetUser = userDao.getUserDetails(targetUserName);
+
+        if ( targetUser == null) {
+            System.out.println("Account doesn't exist");
+            return;
+        }
 
         Account sourcePrimaryAccount = UserUtils.getPrimaryAccount(sourceUser);
         Account targetPrimaryAccount = UserUtils.getPrimaryAccount(targetUser);
@@ -65,7 +75,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
         targetPrimaryAccount.setBalance(targetPrimaryAccount.getBalance() + amount);
 
         // save/persist in DB
-
         accountDao.updateAccount(sourcePrimaryAccount);
         accountDao.updateAccount(targetPrimaryAccount);
 
@@ -79,8 +88,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
                 amount
         );
         transactionDao.insertTransaction(transaction);
-
-
 
     }
 

@@ -3,9 +3,12 @@ package com.bluesky.bankapp.executors;
 import com.bluesky.bankapp.model.Account;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class OpenNewAccountActionExecutor implements ActionExecutor {
-
+    @Autowired
     private SessionContext context;
 
     public OpenNewAccountActionExecutor(SessionContext context) {

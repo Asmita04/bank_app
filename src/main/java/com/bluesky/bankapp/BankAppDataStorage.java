@@ -3,12 +3,14 @@ package com.bluesky.bankapp;
 
 import com.bluesky.bankapp.model.MoneyTransferRequest;
 import com.bluesky.bankapp.model.User;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class BankAppDataStorage {
      public   Map<String, User> userMap;
      public HashMap<String, Integer> accountNumbers ;

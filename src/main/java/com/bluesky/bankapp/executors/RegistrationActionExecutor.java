@@ -1,11 +1,8 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.AppConfig;
 import com.bluesky.bankapp.BankAppDataStorage;
-import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
-import com.bluesky.bankapp.dao.TransactionDao;
 import com.bluesky.bankapp.dao.UserCredsDao;
 import com.bluesky.bankapp.dao.UserDao;
 import com.bluesky.bankapp.model.Account;
@@ -13,21 +10,33 @@ import com.bluesky.bankapp.model.RegistrationRequest;
 import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.model.UserCreds;
 import com.bluesky.bankapp.security.SessionContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
+@Component
 public class RegistrationActionExecutor implements ActionExecutor {
+
+    @Autowired
     private SessionContext context;
-    private final UserDao userDao = AppConfig.getApplicationContext().getBean(UserDao.class);
-    private final AccountDao accountDao = AppConfig.getApplicationContext().getBean(AccountDao.class);
-    private UserCredsDao userCredsDao = AppConfig.getApplicationContext().getBean(UserCredsDao.class);
+
+    @Autowired
+    private  UserDao userDao;
+    @Autowired
+    private  AccountDao accountDao;
+    @Autowired
+    private UserCredsDao userCredsDao;
+    @Autowired
     private RegistrationDataCollector collector;
+
+    @Autowired
     private BankAppDataStorage dataStorage;
 
-    public RegistrationActionExecutor(SessionContext context, RegistrationDataCollector collector, BankAppDataStorage dataStorage) {
+    public RegistrationActionExecutor(SessionContext context, UserDao userDao, AccountDao accountDao, UserCredsDao userCredsDao, RegistrationDataCollector collector, BankAppDataStorage dataStorage) {
         this.context = context;
+        this.userDao = userDao;
+        this.accountDao = accountDao;
+        this.userCredsDao = userCredsDao;
         this.collector = collector;
         this.dataStorage = dataStorage;
     }
@@ -35,10 +44,6 @@ public class RegistrationActionExecutor implements ActionExecutor {
     public void execute(){
 
         RegistrationRequest request = collector.collect();
-
-        // add user
-        // add account
-        // add user creds
 
         User user = new User(request.getFirstName(),
                 request.getLastName(),
