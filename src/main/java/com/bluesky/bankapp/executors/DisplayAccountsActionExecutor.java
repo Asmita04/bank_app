@@ -5,8 +5,6 @@ import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.ui.UserScreen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.sql.SQLException;
 @Component
 public class DisplayAccountsActionExecutor implements ActionExecutor {
     @Autowired

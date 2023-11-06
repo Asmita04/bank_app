@@ -1,35 +1,37 @@
 package com.bluesky.bankapp.dao;
 
-import com.bluesky.bankapp.collectors.DatabaseConnection;
 import com.bluesky.bankapp.model.LoginRequest;
 import com.bluesky.bankapp.model.UserCreds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class UserCredsDao {
+
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public void addUserCreds(UserCreds userCreds){
 
-        String sql = "INSERT INTO LoginCredentials (username, pin) VALUES (?, ?)";
-        jdbcTemplate.update(sql, userCreds.getUsername(), userCreds.getPin());
+        String sql = "INSERT INTO LoginCredentials (username, pin) VALUES (:username, :pin)";
+        SqlParameterSource paramSource = new MapSqlParameterSource()
+                .addValue("username",userCreds.getUsername())
+                .addValue("pin",userCreds.getPin());
+        namedParameterJdbcTemplate.update(sql,paramSource);
     }
+
 
     public UserCreds getUserCreds(LoginRequest userCreds)  {
 
-        String sql = "SELECT * FROM LoginCredentials WHERE username = ? and pin = ?";
-        List<UserCreds> credsList = jdbcTemplate.query(sql, new Object[]{userCreds.getAadhaar(), userCreds.getPin()},
-                (resultSet, rowNum) -> new UserCreds(
+        String sql = "SELECT * FROM LoginCredentials WHERE username = :username and pin = :pin ";
+        SqlParameterSource paramSource = new MapSqlParameterSource()
+                .addValue("username",userCreds.getAadhaar())
+                .addValue("pin",userCreds.getPin());
+        List<UserCreds> credsList = namedParameterJdbcTemplate.query(sql, paramSource,  (resultSet, rowNum) -> new UserCreds(
                         resultSet.getString("username"),
                         resultSet.getInt("pin")
                 ));

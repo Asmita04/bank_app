@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.LoginDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
 import com.bluesky.bankapp.dao.UserCredsDao;
@@ -40,24 +39,12 @@ public class LoginActionExecutor implements ActionExecutor {
     public void execute() throws Exception {
         LoginRequest loginRequest = collector.collect();
         UserCreds userCreds = userCredsDao.getUserCreds(loginRequest);
-        User user = userDao.getUserDetails(loginRequest.getAadhaar());
-
-        if(user == null){
-            System.out.println("User Doesn't Exist!");
-            return;
-        }
-
-        List<Account> accounts = accountDao.getAccounts(user.getUserName());
-        user.setAccounts(accounts);
-        //Connection con = DatabaseConnection.getConnection();
-//        PreparedStatement stm= con.prepareStatement("select * from ");
-
         if (userCreds == null) {
             System.out.println("Invalid Aadhaar Number, Please enter correct Aadhaar number");
-
-        } else {
-            context.setCurr(user);
+            return;
         }
+        User user = userDao.getUserDetails(userCreds.getUsername());
+        context.setCurr(user);
 
     }
 

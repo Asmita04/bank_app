@@ -1,15 +1,8 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.BankAppDataStorage;
-import com.bluesky.bankapp.collectors.DataCollectorFactory;
-import com.bluesky.bankapp.collectors.LoginDataCollector;
-import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
-import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.model.UserAction;
-import com.bluesky.bankapp.security.SessionContext;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 

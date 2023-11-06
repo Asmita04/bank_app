@@ -45,4 +45,14 @@ public class Account {
     public void setPrimary(Boolean primary) {
         isPrimary = primary;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accNum='" + accNum + '\'' +
+                ", username='" + username + '\'' +
+                ", balance=" + balance +
+                ", isPrimary=" + isPrimary +
+                '}';
+    }
 }
