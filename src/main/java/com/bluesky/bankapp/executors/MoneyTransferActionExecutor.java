@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.MoneyTransferDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
 import com.bluesky.bankapp.dao.TransactionDao;
@@ -12,15 +11,10 @@ import com.bluesky.bankapp.model.User;
 import com.bluesky.bankapp.security.SessionContext;
 import com.bluesky.bankapp.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MoneyTransferActionExecutor implements ActionExecutor {
-    @Autowired
-    private  BankAppDataStorage dataStorage;
-    @Autowired
-    private ApplicationContext applicationContext;
     @Autowired
     private  MoneyTransferDataCollector collector;
     @Autowired
@@ -32,9 +26,7 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
     @Autowired
     private  SessionContext context;
 
-    public MoneyTransferActionExecutor(BankAppDataStorage dataStorage, ApplicationContext applicationContext, MoneyTransferDataCollector collector, UserDao userDao, AccountDao accountDao, TransactionDao transactionDao, SessionContext context) {
-        this.dataStorage = dataStorage;
-        this.applicationContext = applicationContext;
+    public MoneyTransferActionExecutor(MoneyTransferDataCollector collector, UserDao userDao, AccountDao accountDao, TransactionDao transactionDao, SessionContext context) {
         this.collector = collector;
         this.userDao = userDao;
         this.accountDao = accountDao;
@@ -45,9 +37,6 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
     @Override
     public void execute(){
 
-        // get receivers primary account
-        // debit from sender primary and credit to receivers primary account
-        // save into DB
         MoneyTransferRequest request = collector.collect();
         String targetUserName = request.getTargetUsername();
         int amount = request.getAmount();
@@ -63,6 +52,17 @@ public class MoneyTransferActionExecutor implements ActionExecutor {
 
         Account sourcePrimaryAccount = UserUtils.getPrimaryAccount(sourceUser);
         Account targetPrimaryAccount = UserUtils.getPrimaryAccount(targetUser);
+
+
+        if (sourcePrimaryAccount == null) {
+            System.out.println("Source primary account is null");
+            return;
+        }
+
+        if (targetPrimaryAccount == null) {
+            System.out.println("Target primary account is null");
+            return;
+        }
 
         // validate if the source acc has sufficient balance
         if (sourcePrimaryAccount.getBalance() <= amount) {

@@ -1,6 +1,5 @@
 package com.bluesky.bankapp.executors;
 
-import com.bluesky.bankapp.BankAppDataStorage;
 import com.bluesky.bankapp.collectors.RegistrationDataCollector;
 import com.bluesky.bankapp.dao.AccountDao;
 import com.bluesky.bankapp.dao.UserCredsDao;
@@ -29,16 +28,13 @@ public class RegistrationActionExecutor implements ActionExecutor {
     @Autowired
     private RegistrationDataCollector collector;
 
-    @Autowired
-    private BankAppDataStorage dataStorage;
 
-    public RegistrationActionExecutor(SessionContext context, UserDao userDao, AccountDao accountDao, UserCredsDao userCredsDao, RegistrationDataCollector collector, BankAppDataStorage dataStorage) {
+    public RegistrationActionExecutor(SessionContext context, UserDao userDao, AccountDao accountDao, UserCredsDao userCredsDao, RegistrationDataCollector collector) {
         this.context = context;
         this.userDao = userDao;
         this.accountDao = accountDao;
         this.userCredsDao = userCredsDao;
         this.collector = collector;
-        this.dataStorage = dataStorage;
     }
 
     public void execute(){
@@ -72,22 +68,9 @@ public class RegistrationActionExecutor implements ActionExecutor {
 
 
         // At the time of registration, first account is always
-        // primary account
-        account.setPrimary(true);
 
         user.getAccounts().add(account);
-
-
-//    -------------------------------------------------------------------
-        boolean exists = true; //dataStorage.userExists(user);
-        if (exists) {
-            System.out.println("User already exists, please login!");
-        } else {
-            // add user to db
-            dataStorage.addUser(user);
-            // Login user
-            context.setCurr(user);
-        }
+        context.setCurr(user);
     }
 
 

@@ -5,12 +5,8 @@ import com.bluesky.bankapp.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
-@Component
-public class SessionContext {
-
+@Component public class SessionContext {
     private User curr; // represents currently logged in user
-
     @Autowired
     private InputReader scan;
 
